@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 export const generateJWT = ({
+    _id,
     nombre,
     email,
     unidad,
@@ -9,6 +10,7 @@ export const generateJWT = ({
     extension,
     rol,
 }) => jwt.sign({
+    id: _id,
     nombre,
     email,
     unidad,

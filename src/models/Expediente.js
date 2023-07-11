@@ -3,7 +3,6 @@ import { model, Schema } from 'mongoose';
 const expedienteSchema = new Schema({
     folio: {
         type: Number,
-        unique: true,
     },
     nombre: {
         type: String,
@@ -12,19 +11,10 @@ const expedienteSchema = new Schema({
     curp: {
         type: String,
         required: true
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-        required: true
-    },
-    updatedAt: {
-        type: Date,
-        default: Date.now,
-        required: true
-    },
-}
-);
+    }
+}, {
+    timestamps: true
+});
 
 export const Expediente = model('Expediente', expedienteSchema);
 

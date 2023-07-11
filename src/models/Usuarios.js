@@ -47,6 +47,7 @@ const usuariosSchema = new Schema({
         type: String,
         required: true,
         trim: true,
+        enum: ["admin", "user", "super_admin"]
     },
     activo: {
         type: Boolean,

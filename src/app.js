@@ -2,6 +2,7 @@ import cors from 'cors';
 import express, { json } from 'express';
 import morgan from "morgan";
 import usuarioRoutes from "./routes/usuarios.routes";
+import expedienteRoutes from "./routes/expediente.routes";
 
 /* INIT */
 const app = express();
@@ -13,6 +14,7 @@ app.use(cors());
 
 /* IMPORT ROUTES */
 app.use('/api/usuario', usuarioRoutes);
+app.use('/api/expediente', expedienteRoutes);
 
 
 /* kill DEV -ENV */

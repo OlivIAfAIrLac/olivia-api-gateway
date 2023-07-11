@@ -1,77 +1,54 @@
-// import { readLastClave } from '../helpers/helpers';
 import { Expediente } from '../models/Expediente';
 
 
-export const getClientes = async (req, res, next) => {
-    const { baseUrl } = req
+export const getAllExpediente = async (req, res, next) => {
     try {
-        const { razonSocial = '' } = req.query
-
-        const clientes = baseUrl === "/api/factura/clientes" ?
-            await readCliente({ model: ClienteFactura, razonSocial })
-            :
-            await readCliente({ model: ClienteRemision, razonSocial })
-
-        if (clientes.length > 0) res.send(clientes);
+        const expediente = await Expediente.find()
+        if (expediente.length > 0) res.send(expediente);
         else res.send([]);
     } catch (error) {
         console.error(error);
+        res.status(500).send(error);
+    }
+}
+
+export const getExpedienteById = async (req, res, next) => {
+    try {
+        const { id } = req.params
+        console.log(`ID ${id}`);
+        const expediente = await Expediente.findOne({ _id: id })
+
+        expediente
+            ? res.send(expediente)
+            : res.send([]);
+    } catch (error) {
+        console.error(error);
         res.status(500).send(error.errors);
     }
 }
 
-export const updateCliente = async (req, res, next) => {
+export const updateExpediente = async (req, res, next) => {
     try {
-        const { baseUrl } = req
         const { id } = req.params
 
+        const {
+            folio,
+            nombre,
+            curp,
+        } = req.body;
 
-        const cliente = baseUrl === "/api/factura/clientes" ?
-            await ClienteFactura.updateOne({ _id: id }, { $set: req.body })
+        const expediente = await Expediente.updateOne({ _id: id }, {
+            $set: {
+                folio,
+                nombre,
+                curp
+            }
+        });
+
+        expediente.matchedCount === 1 ?
+            res.send({ msg: "Expediente actualizado", expediente })
             :
-            await ClienteRemision.updateOne({ _id: id }, { $set: req.body })
-
-        cliente.matchedCount === 1 ?
-            res.send({ msg: "cliente actualizado", cliente })
-            :
-            res.status(304).send({ msg: "cliente no se pudo actualizar", cliente })
-
-    } catch (error) {
-        console.error(error.errors);
-        res.status(500).send(error.errors);
-    }
-}
-
-export const createClientes = async (req, res, next) => {
-    try {
-
-        const { baseUrl, body } = req;
-        const cliente = baseUrl === "/api/factura/clientes" ?
-            ClienteFactura(body)
-            :
-            ClienteRemision(body)
-
-        await cliente.save();
-        res.status(200).send(cliente);
-    } catch (error) {
-        res.status(500).send({ error: error.code });
-    }
-}
-
-export const deleteCliente = async (req, res, next) => {
-    try {
-        const { baseUrl, params } = req
-        const { id } = params;
-
-        const cliente = baseUrl === "/api/factura/clientes" ?
-            await removeCliente({ model: ClienteFactura, id })
-            :
-            await removeCliente({ model: ClienteRemision, id })
-
-        cliente.deletedCount === 1 ?
-            res.send({ msg: "Cliente eliminado", count: deleteCliente })
-            :
-            res.send({ msg: "No se pudo elimiar el cliente" })
+            res.status(304).send({ msg: "Expediente no se pudo actualizar", expediente })
 
     } catch (error) {
         console.error(error);
@@ -79,44 +56,43 @@ export const deleteCliente = async (req, res, next) => {
     }
 }
 
-export const getLastClave = async (req, res, next) => {
+export const createExpediente = async (req, res, next) => {
     try {
-        const { baseUrl } = req
-        const clientes = baseUrl === '/api/factura/clientes' ?
-            await readLastClave({ model: ClienteFactura })
-            :
-            await readLastClave({ model: ClienteRemision })
+        const { body } = req;
+        const {
+            folio,
+            nombre,
+            curp
+        } = body;
 
-        const clave = parseInt(clientes) + 1;
+        const expediente = new Expediente({
+            folio,
+            nombre,
+            curp
+        })
 
-        clave ?
-            res.send({ clave })
-            :
-            res.send({
-                msg: "no se encontró clave"
-            })
-
-
+        await expediente.save();
+        res.status(200).send(expediente);
     } catch (error) {
         console.error(error);
-        res.status(500).send(error.errors);
+        res.status(500).send(error);
     }
 }
 
-/* Common Functions */
+export const deleteExpediente = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        console.log(`ID ${id}`);
 
-const readCliente = async props => {
-    const { model, razonSocial = '' } = props;
+        const countDeleted = await Expediente.deleteOne({ _id: id })
 
-    return await model.find({
-        razonSocial: new RegExp(razonSocial, 'i'),
-    })
-} 
+        countDeleted.deletedCount === 1 ?
+            res.send({ msg: "Expediente eliminado", count: countDeleted })
+            :
+            res.send({ msg: "No se eliminó ningún Expediente" });
 
-const removeCliente = async props => {
-    const { model, id } = props;
-
-    return await model.deleteOne({
-        _id: id
-    });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send(error.errors)
+    }
 }

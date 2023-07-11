@@ -1,17 +1,18 @@
 import { Router } from 'express';
 import {
-    
+    createExpediente,
+    updateExpediente,
+    deleteExpediente,
+    getAllExpediente,
+    getExpedienteById,
 } from '../controllers/expediente.controller';
 
 /* INIT */
 const router = Router();
 
-
-// api/expediente/last_clave
-router.get('/last_clave', getLastClave);
-
 // api/expediente
-router.get('/', getExpediente);
+router.get('/', getAllExpediente);
+router.get('/:id', getExpedienteById);
 router.post('/', createExpediente);
 
 // api/expediente/:id
