@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import { model, Schema } from 'mongoose';
 
+
 const usuariosSchema = new Schema({
     nombre: {
         type: String,
@@ -14,6 +15,11 @@ const usuariosSchema = new Schema({
         unique: true
     },
     password: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    token: {
         type: String,
         required: true,
         trim: true,
@@ -61,7 +67,7 @@ const usuariosSchema = new Schema({
 }
 );
 
-/* Hass passwords */
+/* Hash passwords */
 usuariosSchema.pre('save', async function (next) {
     if (!this.isModified('password')) {
         next();
@@ -69,6 +75,11 @@ usuariosSchema.pre('save', async function (next) {
     const salt = await bcrypt.genSalt(10)
     this.password = await bcrypt.hash(this.password, salt)
 })
+
+/* check password */
+usuariosSchema.methods.checkPass = async function (passwordForm) {
+    return await bcrypt.compare(passwordForm, this.password)
+}
 
 export const Usuarios = model('Usuarios', usuariosSchema);
 

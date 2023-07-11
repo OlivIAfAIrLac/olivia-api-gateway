@@ -1,12 +1,43 @@
 // import { readLastClave } from "../helpers/helpers";
 import { Usuarios } from "../models/Usuarios";
+import { generateID } from '../helpers/getUniqueToken';
+import { generateJWT } from "../helpers/getJWT";
 
 
+export const authUser = async (req, res, next) => {
+    try {
+        /* check usre exist */
+        const {
+            email,
+            password
+        } = req.body;
+
+        const usuario = await Usuarios.findOne({ email });
+        /* check user exist, is active */
+        (!usuario || !usuario.activo) && res.status(404).send({ msg: "No se encontró ningún usuario" });
+        /* check correct password */
+        (await usuario.checkPass(password))
+            ? res.status(200).send(
+                {
+                    ...formatResponseUser(usuario),
+                    token: generateJWT(usuario)
+                })
+            : res.status(403).send({ msg: "Usuario o contraseña incorrectos" });
+
+
+
+        /* check user pass */
+    } catch (error) {
+        console.error(error);
+        res.status(500).send(error);
+    }
+}
 
 export const createUsuario = async (req, res, next) => {
     try {
         /* TODO: Add bcrypt */
         const usuario = new Usuarios(req.body);
+        usuario.token = generateID();
         await usuario.save();
         res.status(200).send(usuario)
 
@@ -76,7 +107,7 @@ export const updateUsuario = async (req, res, next) => {
             rol,
             activo,
         } = req.body;
-        
+
         const usuario = await Usuarios.updateOne({ _id: id }, {
             $set: {
                 nombre,
@@ -108,6 +139,7 @@ const formatResponseUser = (usuario) => ({
     email: usuario.email,
     unidad: usuario.unidad,
     profesion: usuario.profesion,
+    token: usuario.token,
     telefono: usuario.telefono,
     extension: usuario.extension,
     rol: usuario.rol,
