@@ -5,8 +5,9 @@ import {
     getUsuarioById,
     getAllUsuarios,
     updateUsuario,
-    authUser
 } from "../controllers/usuarios.controller";
+
+
 
 const router = Router();
 
@@ -21,8 +22,7 @@ router.post('/', createUsuario);
 router.put('/:id', updateUsuario);
 router.delete('/:id', deleteUsuario);
 
-/* AUTH */
-router.post('/login', authUser);
+
 
 
 export default router;

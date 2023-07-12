@@ -1,4 +1,6 @@
+import { Documento } from '../models/Documento';
 import { Expediente } from '../models/Expediente';
+import { Audio } from '../models/Audio';
 
 
 export const getAllExpediente = async (req, res, next) => {
@@ -17,9 +19,15 @@ export const getExpedienteById = async (req, res, next) => {
         const { id } = req.params
         console.log(`ID ${id}`);
         const expediente = await Expediente.findOne({ _id: id })
+        const audio = await Audio.find().where("expediente").equals(expediente._id)
+        const documentos = await Documento.find().where("expediente").equals(expediente._id)
 
         expediente
-            ? res.send(expediente)
+            ? res.send({
+                expediente,
+                audio,
+                documentos
+            })
             : res.send([]);
     } catch (error) {
         console.error(error);

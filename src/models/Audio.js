@@ -8,17 +8,11 @@ const audioSchema = new Schema({
         type: String,
         required: true
     },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-        required: true
+    expediente: {
+        type: Schema.ObjectId,
+        ref: "Expediente"
     },
-    updatedAt: {
-        type: Date,
-        default: Date.now,
-        required: true
-    },
-}
+}, { timestamps: true }
 );
 
 export const Audio = model('Audio', audioSchema);
