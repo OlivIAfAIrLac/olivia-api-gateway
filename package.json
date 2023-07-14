@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon -L src/index.js --exec babel-node --delay 500ms",
     "build": "babel src -d dist",
-    "deploy": "node dist/index.js"
+    "deploy": "pm2 start dist/index.js"
   },
   "repository": {
     "type": "git",
