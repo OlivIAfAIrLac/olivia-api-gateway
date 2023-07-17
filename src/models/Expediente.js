@@ -1,4 +1,5 @@
 import { model, Schema } from 'mongoose';
+import mongoosePaginate from 'mongoose-paginate-v2'
 
 const expedienteSchema = new Schema({
     folio: {
@@ -15,6 +16,8 @@ const expedienteSchema = new Schema({
 }, {
     timestamps: true
 });
+
+expedienteSchema.plugin(mongoosePaginate)
 
 export const Expediente = model('Expediente', expedienteSchema);
 

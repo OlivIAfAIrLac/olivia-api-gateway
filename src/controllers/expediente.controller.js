@@ -1,13 +1,13 @@
+import { Audio } from '../models/Audio';
 import { Documento } from '../models/Documento';
 import { Expediente } from '../models/Expediente';
-import { Audio } from '../models/Audio';
 
 
 export const getAllExpediente = async (req, res, next) => {
     try {
-        const expediente = await Expediente.find()
-        if (expediente.length > 0) res.send(expediente);
-        else res.send([]);
+        const { page } = req.query;
+        const expediente = await Expediente.paginate({}, { limit: 9, page }).then({})
+        res.send(expediente);
     } catch (error) {
         console.error(error);
         res.status(500).send(error);

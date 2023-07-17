@@ -9,7 +9,7 @@ const main = async () => {
         console.clear()
         /* connect to database */
         await db();
-        console.log(`Database connected`);
+        
 
         /* asign port */
         app.listen(PORT)
