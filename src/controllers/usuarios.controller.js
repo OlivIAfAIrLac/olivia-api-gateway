@@ -39,7 +39,30 @@ export const createUsuario = async (req, res, next) => {
         const usuario = new Usuarios(req.body);
         usuario.token = generateID();
         await usuario.save();
-        res.status(200).send(usuario)
+        const {
+            nombre,
+            email,
+            token,
+            unidad,
+            profesion,
+            telefono,
+            extension,
+            rol,
+            activo
+        } = usuario
+
+        const response = {
+            nombre,
+            email,
+            token,
+            unidad,
+            profesion,
+            telefono,
+            extension,
+            rol,
+            activo,
+        }
+        res.status(200).send(response)
 
     } catch (error) {
         console.error(error);

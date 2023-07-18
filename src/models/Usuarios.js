@@ -40,7 +40,6 @@ const usuariosSchema = new Schema({
     },
     extension: {
         type: String,
-        required: true,
         trim: true,
     },
     rol: {
