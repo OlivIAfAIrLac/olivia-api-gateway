@@ -6,7 +6,12 @@ import { Expediente } from '../models/Expediente';
 export const getAllExpediente = async (req, res, next) => {
     try {
         const { page } = req.query;
-        const expediente = await Expediente.paginate({}, { limit: 9, page }).then({})
+        const expediente = await Expediente.paginate({},
+            {
+                limit: 9,
+                page,
+                sort: { createdAt: 'desc' }
+            }).then({})
         res.send(expediente);
     } catch (error) {
         console.error(error);
