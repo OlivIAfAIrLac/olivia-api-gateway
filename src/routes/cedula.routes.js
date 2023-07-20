@@ -1,10 +1,6 @@
 import { Router } from 'express';
 import {
-    createDocumento,
-    deleteDocumento,
-    getAllDocumento,
-    getDocumentoById,
-    updateDocumento,
+    
 } from '../controllers/documento.controller';
 
 /* INIT */

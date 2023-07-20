@@ -1,6 +1,7 @@
 import { Audio } from '../models/Audio';
 import { Documento } from '../models/Documento';
 import { Expediente } from '../models/Expediente';
+import { Cedula } from '../models/Cedula';
 
 
 export const getAllExpediente = async (req, res, next) => {
@@ -84,8 +85,14 @@ export const createExpediente = async (req, res, next) => {
             curp
         })
 
+
         await expediente.save();
-        res.status(200).send(expediente);
+        /* create cedula */
+        const cedula = new Cedula({
+            expediente: expediente._id
+        })
+        await cedula.save()
+        res.status(200).send({ expediente, cedula });
     } catch (error) {
         console.error(error);
         res.status(500).send(error);

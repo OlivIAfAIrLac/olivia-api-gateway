@@ -40,6 +40,7 @@ export const createUsuario = async (req, res, next) => {
         usuario.token = generateID();
         await usuario.save();
         const {
+            _id,
             nombre,
             email,
             token,
@@ -52,6 +53,7 @@ export const createUsuario = async (req, res, next) => {
         } = usuario
 
         const response = {
+            _id,
             nombre,
             email,
             token,
@@ -88,9 +90,9 @@ export const getUsuarioById = async (req, res, next) => {
     try {
 
         const { id } = req.params;
-        console.log(`ID ${id}`);
+
         const usuario = await Usuarios.findOne({ _id: id })
-        usuario ? res.send(formatResponseUser(usuario)) : res.send({ msg: "No se encontró ningún usuario" });
+        usuario ? res.send(formatResponseUser(usuario)) : res.status(404).send({ msg: "No se encontró ningún usuario" });
     } catch (error) {
         console.error(error);
         res.status(500).send(error.errors);
@@ -100,14 +102,14 @@ export const getUsuarioById = async (req, res, next) => {
 export const deleteUsuario = async (req, res, next) => {
     try {
         const { id } = req.params;
-        console.log(`ID ${id}`);
+
 
         const countDeleted = await Usuarios.deleteOne({ _id: id })
 
         countDeleted.deletedCount === 1 ?
             res.send({ msg: "Usuario eliminado", count: countDeleted })
             :
-            res.send({ msg: "No se eliminó ningún Usuario" });
+            res.status(304).send({ msg: "No se eliminó ningún Usuario" });
 
     } catch (error) {
         console.error(error);
@@ -158,6 +160,7 @@ export const updateUsuario = async (req, res, next) => {
 }
 
 const formatResponseUser = (usuario) => ({
+    _id: usuario._id,
     nombre: usuario.nombre,
     email: usuario.email,
     unidad: usuario.unidad,

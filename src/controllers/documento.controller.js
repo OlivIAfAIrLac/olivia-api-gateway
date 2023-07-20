@@ -15,7 +15,7 @@ export const getAllDocumento = async (req, res, next) => {
 export const getDocumentoById = async (req, res, next) => {
     try {
         const { id } = req.params
-        console.log(`ID ${id}`);
+        
         const documento = await Documento.findOne({ _id: id })
 
         documento
@@ -81,7 +81,7 @@ export const createDocumento = async (req, res, next) => {
 export const deleteDocumento = async (req, res, next) => {
     try {
         const { id } = req.params;
-        console.log(`ID ${id}`);
+        
 
         const countDeleted = await Documento.deleteOne({ _id: id })
 
