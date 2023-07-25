@@ -1,4 +1,10 @@
+import { mapDocumentos } from '../helpers/mapDocumentos';
 import { Documento } from '../models/Documento';
+import {
+    getFilesFromFolder,
+    uploadFile
+} from '../s3.js';
+
 
 
 export const getAllDocumento = async (req, res, next) => {
@@ -15,7 +21,7 @@ export const getAllDocumento = async (req, res, next) => {
 export const getDocumentoById = async (req, res, next) => {
     try {
         const { id } = req.params
-        
+
         const documento = await Documento.findOne({ _id: id })
 
         documento
@@ -57,31 +63,50 @@ export const updateDocumento = async (req, res, next) => {
 
 export const createDocumento = async (req, res, next) => {
     try {
-        const { body } = req;
+        const { body, files } = req;
+        const { documentos } = files
         const {
-            descripcion,
-            url,
-            expediente,
+            expediente
         } = body;
 
-        const documento = new Documento({
-            descripcion,
-            url,
-            expediente,
-        })
+        const resFile = documentos.length
+            ? await Promise.allSettled(documentos.map(file => createFile({ file, prefix: expediente })))
+            : await uploadFile({ file: documentos, prefix: expediente })
 
-        await documento.save();
-        res.status(200).send(documento);
+        // const docsCreated = await getFilesFromFolder({ prefix: expediente })
+        // const urlsSigned = docsCreated.Contents ? docsCreated.Contents.map(mapDocumentos) : []
+        // console.log(urlsSigned);
+        // const urls = await Promise.allSettled(urlsSigned);
+        // const docs = urls.map(item => ({
+        //     descripcion: item.value.filename.split('/')[1],
+        //     url: item.value.url
+        // }))
+        // const documento = new Documento({
+        //     descripcion,
+        //     url,
+        //     expediente,
+        // })
+
+        // await documento.save();
+
+        if (documentos.length) {
+            resFile.some(item => item.status !== 'fulfilled')
+                ? res.status(304).send({ msg: 'no se pudo crear los documentos' })
+                : res.status(200).send({ msg: 'documentos cargados con exito' })
+        } else {
+            res.status(200).send({ msg: 'documentos cargados con exito' })
+        }
     } catch (error) {
         console.error(error);
         res.status(500).send(error);
     }
 }
+const createFile = async ({ file, prefix }) => await uploadFile({ file, prefix })
 
 export const deleteDocumento = async (req, res, next) => {
     try {
         const { id } = req.params;
-        
+
 
         const countDeleted = await Documento.deleteOne({ _id: id })
 
@@ -95,3 +120,4 @@ export const deleteDocumento = async (req, res, next) => {
         res.status(500).send(error)
     }
 }
+

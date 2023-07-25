@@ -4,10 +4,6 @@ const documentoSchema = new Schema({
     descripcion: {
         type: String,
     },
-    url: {
-        type: String,
-        required: true
-    },
     expediente: {
         type: Schema.ObjectId,
         ref: "Expediente"

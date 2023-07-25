@@ -1,13 +1,27 @@
-import { Audio } from '../models/Audio';
-import { Documento } from '../models/Documento';
-import { Expediente } from '../models/Expediente';
+import { mapDocumentos } from '../helpers/mapDocumentos';
 import { Cedula } from '../models/Cedula';
+import { Expediente } from '../models/Expediente';
+import { getFileURL, getFilesFromFolder } from '../s3';
 
 
 export const getAllExpediente = async (req, res, next) => {
     try {
-        const { page } = req.query;
-        const expediente = await Expediente.paginate({},
+        const { page, search } = req.query;
+        const isSearchingFolio = new RegExp("[0-9]+")
+        const query = isSearchingFolio.test(search)
+            ?
+            {
+                folio: {
+                    $regex: new RegExp(search), $options: "i"
+                }
+            }
+            : {
+                nombre: {
+                    $regex: new RegExp(search), $options: "i"
+                }
+            }
+
+        const expediente = await Expediente.paginate(query,
             {
                 limit: 9,
                 page,
@@ -25,21 +39,35 @@ export const getExpedienteById = async (req, res, next) => {
         const { id } = req.params
         console.log(`ID ${id}`);
         const expediente = await Expediente.findOne({ _id: id })
-        const audio = await Audio.find().where("expediente").equals(expediente._id)
-        const documentos = await Documento.find().where("expediente").equals(expediente._id)
+        // const audio = await Audio.find().where("expediente").equals(id)
+        // const documentos = await Documento.find().where("expediente").equals(id)
+        const files = await getFilesFromFolder({ prefix: id })
+
+        const urlsSigned = files.Contents ? files.Contents.map(mapDocumentos) : []
+
+
+        let urls = await Promise.allSettled(urlsSigned);
+        // console.log(urls);
+        const documentos = urls.map(item => ({
+            descripcion: item.value.filename.split('/')[1],
+            url: item.value.url
+        }))
 
         expediente
             ? res.send({
                 expediente,
-                audio,
-                documentos
+                //         audio,
+                documentos,
+                //         urls
             })
             : res.send([]);
     } catch (error) {
+        res.status(500).send(error);
         console.error(error);
-        res.status(500).send(error.errors);
     }
 }
+
+
 
 export const updateExpediente = async (req, res, next) => {
     try {
@@ -116,3 +144,4 @@ export const deleteExpediente = async (req, res, next) => {
         res.status(500).send(error.errors)
     }
 }
+

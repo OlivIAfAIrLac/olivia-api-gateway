@@ -31,8 +31,6 @@ export const checkAuth = async (req, res, next) => {
                 rol,
                 activo
             }
-            console.log(req.usuario);
-
             next();
         }
     } catch (error) {

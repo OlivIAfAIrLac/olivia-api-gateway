@@ -52,7 +52,7 @@ const usuariosSchema = new Schema({
         type: Boolean,
         required: true,
         trim: true,
-        default: false
+        default: true
     },
     createdAt: {
         type: Date,
@@ -78,6 +78,7 @@ usuariosSchema.pre('save', async function (next) {
 
 /* check password */
 usuariosSchema.methods.checkPass = async function (passwordForm) {
+    console.log(passwordForm);
     return await bcrypt.compare(passwordForm, this.password)
 }
 

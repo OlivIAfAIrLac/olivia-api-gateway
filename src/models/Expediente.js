@@ -3,7 +3,7 @@ import mongoosePaginate from 'mongoose-paginate-v2'
 
 const expedienteSchema = new Schema({
     folio: {
-        type: Number,
+        type: String,
     },
     nombre: {
         type: String,

@@ -1,5 +1,6 @@
 import cors from 'cors';
 import express, { json } from 'express';
+import fileUpload from 'express-fileupload'
 import morgan from "morgan";
 import documentoRoutes from "./routes/documento.routes";
 import expedienteRoutes from "./routes/expediente.routes";
@@ -11,6 +12,10 @@ import { authUser } from './controllers/usuarios.controller';
 const app = express();
 
 /* SETUP MIDDLEWARES */
+app.use(fileUpload({
+    useTempFiles: true,
+    tempFileDir: './uploads'
+}))
 app.use(morgan("dev"));
 app.use(json());
 app.use(cors());
