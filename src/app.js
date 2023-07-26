@@ -5,6 +5,7 @@ import morgan from "morgan";
 import documentoRoutes from "./routes/documento.routes";
 import expedienteRoutes from "./routes/expediente.routes";
 import usuarioRoutes from "./routes/usuarios.routes";
+import audioRoutes from "./routes/audio.routes";
 import { checkAuth } from './middleware/checkAuth';
 import { authUser } from './controllers/usuarios.controller';
 
@@ -25,6 +26,7 @@ app.use('/api/login', authUser);
 app.use('/api/usuario', checkAuth, usuarioRoutes);
 app.use('/api/expediente', checkAuth, expedienteRoutes);
 app.use('/api/documento', checkAuth, documentoRoutes);
+app.use('/api/audio', checkAuth, audioRoutes);
 
 
 /* kill DEV -ENV */

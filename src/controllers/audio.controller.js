@@ -1,3 +1,4 @@
+import { mapDocumentos } from '../helpers/mapDocumentos';
 import { Documento } from '../models/Documento';
 import {
     uploadFile
@@ -5,7 +6,7 @@ import {
 
 
 
-export const getAllDocumento = async (req, res, next) => {
+export const getAllAudios = async (req, res, next) => {
     try {
         const documento = await Documento.find()
         if (documento.length > 0) res.send(documento);
@@ -16,7 +17,7 @@ export const getAllDocumento = async (req, res, next) => {
     }
 }
 
-export const getDocumentoById = async (req, res, next) => {
+export const getAudioById = async (req, res, next) => {
     try {
         const { id } = req.params
 
@@ -31,7 +32,7 @@ export const getDocumentoById = async (req, res, next) => {
     }
 }
 
-export const updateDocumento = async (req, res, next) => {
+export const updateAudio = async (req, res, next) => {
     try {
         const { id } = req.params
 
@@ -59,18 +60,18 @@ export const updateDocumento = async (req, res, next) => {
     }
 }
 
-export const createDocumento = async (req, res, next) => {
+export const createAudio = async (req, res, next) => {
     try {
         const { body, files } = req;
-        const { documentos } = files;
-        console.log(documentos);
+        const { audios } = files;
+        console.log(audios);
         const {
             expediente
         } = body;
 
-        const resFile = documentos.length
-            ? await Promise.allSettled(documentos.map(file => createFile({ file, prefix: `${expediente}/documentos` })))
-            : await uploadFile({ file: documentos, prefix: `${expediente}/documentos` })
+        const resFile = audios.length
+            ? await Promise.allSettled(audios.map(file => createFile({ file, prefix: `${expediente}/audios` })))
+            : await uploadFile({ file: audios, prefix: `${expediente}/audios` })
 
         // const docsCreated = await getFilesFromFolder({ prefix: expediente })
         // const urlsSigned = docsCreated.Contents ? docsCreated.Contents.map(mapDocumentos) : []
@@ -88,12 +89,12 @@ export const createDocumento = async (req, res, next) => {
 
         // await documento.save();
 
-        if (documentos.length) {
+        if (audios.length) {
             resFile.some(item => item.status !== 'fulfilled')
-                ? res.status(304).send({ msg: 'no se pudo crear los documentos' })
-                : res.status(200).send({ msg: 'documentos cargados con exito' })
+                ? res.status(304).send({ msg: 'no se pudo crear los audios' })
+                : res.status(200).send({ msg: 'audios cargados con exito' })
         } else {
-            res.status(200).send({ msg: 'documentos cargados con exito' })
+            res.status(200).send({ msg: 'audios cargados con exito' })
         }
     } catch (error) {
         console.error(error);
@@ -102,17 +103,17 @@ export const createDocumento = async (req, res, next) => {
 }
 const createFile = async ({ file, prefix }) => await uploadFile({ file, prefix })
 
-export const deleteDocumento = async (req, res, next) => {
+export const deleteAudio = async (req, res, next) => {
     try {
         const { id } = req.params;
 
 
-        const countDeleted = await Documento.deleteOne({ _id: id })
+        // const countDeleted = await Documento.deleteOne({ _id: id })
 
         countDeleted.deletedCount === 1 ?
-            res.send({ msg: "Documento eliminado", count: countDeleted })
+            res.send({ msg: "audio eliminado", count: countDeleted })
             :
-            res.send({ msg: "No se eliminó ningún Documento" });
+            res.send({ msg: "No se eliminó ningún audio" });
 
     } catch (error) {
         console.error(error);

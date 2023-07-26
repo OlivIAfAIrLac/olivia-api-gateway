@@ -1,7 +1,7 @@
-import { mapDocumentos } from '../helpers/mapDocumentos';
+import { mapFiles } from '../helpers/mapDocumentos';
 import { Cedula } from '../models/Cedula';
 import { Expediente } from '../models/Expediente';
-import { getFileURL, getFilesFromFolder } from '../s3';
+import { getFilesFromFolder } from '../s3';
 
 
 export const getAllExpediente = async (req, res, next) => {
@@ -37,26 +37,36 @@ export const getAllExpediente = async (req, res, next) => {
 export const getExpedienteById = async (req, res, next) => {
     try {
         const { id } = req.params
-        console.log(`ID ${id}`);
         const expediente = await Expediente.findOne({ _id: id })
-        // const audio = await Audio.find().where("expediente").equals(id)
+        // const audio = await Audio.find().where("expediente").equals(id)        
         // const documentos = await Documento.find().where("expediente").equals(id)
-        const files = await getFilesFromFolder({ prefix: id })
+        const documentosFiles = await getFilesFromFolder({ prefix: `${id}/documentos` })
+        const audiosFiles = await getFilesFromFolder({ prefix: `${id}/audios` })
 
-        const urlsSigned = files.Contents ? files.Contents.map(mapDocumentos) : []
+        const urlsSignedDocumentos = documentosFiles.Contents ? documentosFiles.Contents.map(mapFiles) : []
+        const urlsSignedAudios = audiosFiles.Contents ? audiosFiles.Contents.map(mapFiles) : []
 
 
-        let urls = await Promise.allSettled(urlsSigned);
+        let urlsDocumentos = await Promise.allSettled(urlsSignedDocumentos);
+        let urlsAudios = await Promise.allSettled(urlsSignedAudios);
         // console.log(urls);
-        const documentos = urls.map(item => ({
-            descripcion: item.value.filename.split('/')[1],
+        const documentos = urlsDocumentos.map(item => ({
+            descripcion: item.value.filename.split('/')[2],
             url: item.value.url
         }))
+        const audios = urlsAudios.map(item => ({
+            descripcion: item.value.filename.split('/')[2],
+            url: item.value.url
+        }))
+        console.log(expediente,
+            audios,
+            documentos,
+        );
 
         expediente
             ? res.send({
                 expediente,
-                //         audio,
+                audios,
                 documentos,
                 //         urls
             })
