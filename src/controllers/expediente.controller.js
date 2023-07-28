@@ -58,17 +58,12 @@ export const getExpedienteById = async (req, res, next) => {
             descripcion: item.value.filename.split('/')[2],
             url: item.value.url
         }))
-        console.log(expediente,
-            audios,
-            documentos,
-        );
 
         expediente
             ? res.send({
                 expediente,
                 audios,
                 documentos,
-                //         urls
             })
             : res.send([]);
     } catch (error) {

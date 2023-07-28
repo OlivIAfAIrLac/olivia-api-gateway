@@ -1,4 +1,5 @@
 import { Documento } from '../models/Documento';
+import { Expediente } from '../models/Expediente';
 import {
     uploadFile
 } from '../s3.js';
@@ -67,10 +68,23 @@ export const createDocumento = async (req, res, next) => {
         const {
             expediente
         } = body;
+        const exp = await Expediente.exists({ _id: expediente })
 
-        const resFile = documentos.length
-            ? await Promise.allSettled(documentos.map(file => createFile({ file, prefix: `${expediente}/documentos` })))
-            : await uploadFile({ file: documentos, prefix: `${expediente}/documentos` })
+        if (exp) {
+            const resFile = documentos.length
+                ? await Promise.allSettled(documentos.map(file => createFile({ file, prefix: `${expediente}/documentos` })))
+                : await uploadFile({ file: documentos, prefix: `${expediente}/documentos` })
+
+            if (documentos.length) {
+                resFile.some(item => item.status !== 'fulfilled')
+                    ? res.status(304).send({ msg: 'no se pudo crear los documentos' })
+                    : res.status(200).send({ msg: 'documentos cargados con exito' })
+            } else {
+                res.status(200).send({ msg: 'documentos cargados con exito' })
+            }
+        } else {
+            res.status(404).send({ msg: 'por favor revise el expediente' })
+        }
 
         // const docsCreated = await getFilesFromFolder({ prefix: expediente })
         // const urlsSigned = docsCreated.Contents ? docsCreated.Contents.map(mapDocumentos) : []
@@ -88,13 +102,6 @@ export const createDocumento = async (req, res, next) => {
 
         // await documento.save();
 
-        if (documentos.length) {
-            resFile.some(item => item.status !== 'fulfilled')
-                ? res.status(304).send({ msg: 'no se pudo crear los documentos' })
-                : res.status(200).send({ msg: 'documentos cargados con exito' })
-        } else {
-            res.status(200).send({ msg: 'documentos cargados con exito' })
-        }
     } catch (error) {
         console.error(error);
         res.status(500).send(error);

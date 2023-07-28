@@ -1,5 +1,6 @@
 import { mapDocumentos } from '../helpers/mapDocumentos';
 import { Documento } from '../models/Documento';
+import { Expediente } from '../models/Expediente';
 import {
     uploadFile
 } from '../s3.js';
@@ -69,33 +70,24 @@ export const createAudio = async (req, res, next) => {
             expediente
         } = body;
 
-        const resFile = audios.length
-            ? await Promise.allSettled(audios.map(file => createFile({ file, prefix: `${expediente}/audios` })))
-            : await uploadFile({ file: audios, prefix: `${expediente}/audios` })
+        const exp = await Expediente.exists({ _id: expediente })
 
-        // const docsCreated = await getFilesFromFolder({ prefix: expediente })
-        // const urlsSigned = docsCreated.Contents ? docsCreated.Contents.map(mapDocumentos) : []
-        // console.log(urlsSigned);
-        // const urls = await Promise.allSettled(urlsSigned);
-        // const docs = urls.map(item => ({
-        //     descripcion: item.value.filename.split('/')[1],
-        //     url: item.value.url
-        // }))
-        // const documento = new Documento({
-        //     descripcion,
-        //     url,
-        //     expediente,
-        // })
-
-        // await documento.save();
-
-        if (audios.length) {
-            resFile.some(item => item.status !== 'fulfilled')
-                ? res.status(304).send({ msg: 'no se pudo crear los audios' })
-                : res.status(200).send({ msg: 'audios cargados con exito' })
-        } else {
-            res.status(200).send({ msg: 'audios cargados con exito' })
+        if (exp) {
+            const resFile = audios.length
+                ? await Promise.allSettled(audios.map(file => createFile({ file, prefix: `${expediente}/audios` })))
+                : await uploadFile({ file: audios, prefix: `${expediente}/audios` })
+            if (audios.length) {
+                resFile.some(item => item.status !== 'fulfilled')
+                    ? res.status(304).send({ msg: 'no se pudo crear los audios' })
+                    : res.status(200).send({ msg: 'audios cargados con exito' })
+            } else {
+                res.status(200).send({ msg: 'audios cargados con exito' })
+            }
         }
+        else {
+            res.status(404).send({ msg: 'por favor revise el expediente' })
+        }
+
     } catch (error) {
         console.error(error);
         res.status(500).send(error);

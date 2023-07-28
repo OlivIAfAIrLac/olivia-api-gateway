@@ -8,6 +8,8 @@ services:
      - "8080:8080"
    links:
    - mongo
+   environment:
+   - DB_URI=mongodb://mongo:27017/olivia
   mongo:
    container_name: mongo
    image: mongo
