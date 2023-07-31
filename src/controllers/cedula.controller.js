@@ -38,27 +38,25 @@ export const getCedulaById = async (req, res, next) => {
 
 export const updateCedula = async (req, res, next) => {
     try {
+
+
         /* TODO: Update where cedula has expediente id on params */
-        // const { id } = req.params
+        const { body, params, query } = req
+        const { id } = params
+        const { expediente } = query
 
-        // const {
-        //     folio,
-        //     nombre,
-        //     curp,
-        // } = req.body;
+        console.log(id, expediente, body);
 
-        // const expediente = await Cedula.updateOne.where({ _id: id }, {
-        //     $set: {
-        //         folio,
-        //         nombre,
-        //         curp
-        //     }
-        // });
+        const cedula = await Cedula.updateOne(
+            { _id: id, expediente },
+            { $set: body },
+            { runValidators: true }
+        );
 
-        // expediente.matchedCount === 1 ?
-        //     res.send({ msg: "Expediente actualizado", expediente })
-        //     :
-        //     res.status(304).send({ msg: "Expediente no se pudo actualizar", expediente })
+        cedula.matchedCount === 1 ?
+            res.send({ msg: "Cedula actualizada", cedula })
+            :
+            res.status(304).send({ msg: "Cedula no se pudo actualizar", cedula })
 
     } catch (error) {
         console.error(error);

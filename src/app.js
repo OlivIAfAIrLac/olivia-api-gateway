@@ -4,6 +4,7 @@ import fileUpload from 'express-fileupload'
 import morgan from "morgan";
 import documentoRoutes from "./routes/documento.routes";
 import expedienteRoutes from "./routes/expediente.routes";
+import cedulaRoutes from "./routes/cedula.routes";
 import usuarioRoutes from "./routes/usuarios.routes";
 import audioRoutes from "./routes/audio.routes";
 import { checkAuth } from './middleware/checkAuth';
@@ -25,6 +26,7 @@ app.use(cors());
 app.use('/api/login', authUser);
 app.use('/api/usuario', checkAuth, usuarioRoutes);
 app.use('/api/expediente', checkAuth, expedienteRoutes);
+app.use('/api/cedula', checkAuth, cedulaRoutes);
 app.use('/api/documento', checkAuth, documentoRoutes);
 app.use('/api/audio', checkAuth, audioRoutes);
 
