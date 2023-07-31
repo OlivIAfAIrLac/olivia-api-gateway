@@ -12,8 +12,6 @@ import {
     forma_ojos,
     frecuencia_violencia,
     genero,
-    I_emergencia_cual,
-    I_requerimiento_cual,
     modalidad_asesora,
     nariz,
     ocupacion,
@@ -31,6 +29,52 @@ import {
     turno
 } from '../helpers/catalogos';
 
+const HijesSchema = new Schema({
+    III_nombre_completo_de_sus_hijes: {
+        type: String
+    },
+    III_especificar_sexo: {
+        type: String,
+        enum: sexo
+    },
+    III_edad_anios_cumplidos: {
+        type: String
+    },
+    III_escolaridad_hijes: {
+        type: String,
+        enum: escolaridad
+    },
+});
+
+const HabitantesSchema = new Schema({
+    III_parentesco_habitante: {
+        type: String,
+        enum: parentesco
+    },
+    III_especificar_habitante: {
+        type: String
+    },
+    III_sexo_habitante: {
+        type: String,
+        enum: sexo
+    },
+    III_genero_habitante: {
+        type: String,
+        enum: genero
+    },
+    III_edad_habitante: {
+        type: String
+    },
+    III_tiene_alguna_discapacidad_habitante: {
+        type: Boolean
+    },
+    III_es_dependiente_economico_de_quien_solicita_la_atencion: {
+        type: Boolean
+    },
+    III_es_dependiente_de_cuidados_de_quien_solicita_la_atencion: {
+        type: Boolean
+    },
+})
 
 const cedulaSchema = new Schema({
     expediente: {
@@ -125,7 +169,6 @@ const cedulaSchema = new Schema({
     },
     II_genero_especificar: {
         type: String,
-
     },
     II_sexo: {
         type: String,
@@ -167,23 +210,18 @@ const cedulaSchema = new Schema({
         type: Boolean,
 
     },
-    II_motivo: {
+    II_motivo_whatsapp: {
         type: String,
-
     },
     II_autoriza_dar_seguimiento_via_telefonica: {
         type: Boolean,
 
     },
-    II_motivo: {
+    II_motivo_telefonica: {
         type: String,
 
     },
     II_correo_electronico: {
-        type: String,
-
-    },
-    II_direccion_direccion: {
         type: String,
 
     },
@@ -207,15 +245,15 @@ const cedulaSchema = new Schema({
         type: String,
 
     },
-    II_direccion_c_p: {
+    II_direccion_cp: {
         type: String,
 
     },
-    II_direccion_cruce: {
+    II_direccion_cruce1: {
         type: String,
 
     },
-    II_direccion_cruce: {
+    II_direccion_cruce2: {
         type: String,
 
     },
@@ -255,15 +293,15 @@ const cedulaSchema = new Schema({
         type: String,
 
     },
-    II_direccion_eventual_c_p: {
+    II_direccion_eventual_cp: {
         type: String,
 
     },
-    II_direccion_eventual_cruce: {
+    II_direccion_eventual_cruce1: {
         type: String,
 
     },
-    II_direccion_eventual_cruce: {
+    II_direccion_eventual_cruce2: {
         type: String,
 
     },
@@ -331,57 +369,14 @@ const cedulaSchema = new Schema({
     III_cuantas_personas_habitan_en_su_vivienda: {
         type: String
     },
-    III_parentesco_habitante: {
-        type: String,
-        enum: parentesco
-    },
-    III_especificar_habitante: {
-        type: String
-    },
-    /* Multi Habitantes*/
-    III_sexo_habitante: {
-        type: String,
-        enum: sexo
-    },
-    III_genero_habitante: {
-        type: String,
-        enum: genero
-    },
-    III_edad_habitante: {
-        type: String
-    },
-    III_tiene_alguna_discapacidad_habitante: {
-        type: Boolean
-    },
-    III_es_dependiente_economico_de_quien_solicita_la_atencion: {
-        type: Boolean
-    },
-    III_es_dependiente_de_cuidados_de_quien_solicita_la_atencion: {
-        type: Boolean
-    },
-    /* Multi Habitantes */
+    III_habitantes: [HabitantesSchema],
     III_tiene_hijas_hijos_o_hijes: {
         type: Boolean
     },
     III_cuantos_hijes_tiene: {
         type: String
     },
-    /* Mulit Hijos*/
-    III_nombre_completo_de_sus_hijes: {
-        type: String
-    },
-    III_especificar_sexo: {
-        type: String,
-        enum: sexo
-    },
-    III_edad_anios_cumplidos: {
-        type: String
-    },
-    III_escolaridad_hijes: {
-        type: String,
-        enum: escolaridad
-    },
-    /* Mulit Hijos*/
+    III_hijes: [HijesSchema],
     III_quien_aporta_el_mayor_ingreso_dentro_del_hogar: {
         type: String
     },
@@ -480,7 +475,7 @@ const cedulaSchema = new Schema({
         type: String,
         enum: tipo_de_droga
     },
-    /* IV. Motivo de la atención */
+    /* IV. MOTIVO DE LA ATENCIÓN */
     IV_contexto_causa_y_evolucion: {
         type: String,
     },
@@ -520,7 +515,10 @@ const cedulaSchema = new Schema({
         type: String,
     },
     V_cuenta_con_expediente_de_atencion: {
-        type: String,
+        type: Boolean,
+    },
+    V_cuenta_con_expediente_de_atencion_especificar: {
+        type: String
     },
     /* VI. INFORMACIÓN DE LA PERSONA AGRESORA */
     VI_persona_conocida_o_desconocida: {
@@ -563,9 +561,6 @@ const cedulaSchema = new Schema({
         type: String
     },
     VI_tiempo_de_convivencia_con_la_persona_agresora_anios_y_meses: {
-        type: String
-    },
-    VI_direccion: {
         type: String
     },
     VI_calle: {
@@ -636,28 +631,29 @@ const cedulaSchema = new Schema({
         type: String
     },
     VI_especificar_el_tipo_de_drogas_que_consume_la_persona_agresora: {
-        type: String
+        type: String,
+        enum: tipo_de_droga
     },
     VI_enfermedad_mental: {
-        type: String
+        type: Boolean
     },
     VI_toma_algun_tratamiento_psiquiatrico: {
-        type: String
+        type: Boolean
     },
     VI_especificar_tratamiento: {
         type: String
     },
     VI_farmacodependencia: {
-        type: String
+        type: Boolean
     },
     VI_pertenece_a_la_policia_o_al_ejercito: {
-        type: String
+        type: Boolean
     },
     VI_especificar_plicia_ejercito: {
         type: String
     },
     VI_pertenece_o_tiene_enlace_con_el_crimen_organizado: {
-        type: String
+        type: Boolean
     },
     VI_especificar_crimen_organizado: {
         type: String
@@ -678,6 +674,9 @@ const cedulaSchema = new Schema({
     VI_tez: {
         type: String,
         enum: tez
+    },
+    VI_color_cabello: {
+        type: String,
     },
     VI_tamanio_cabello: {
         type: String,

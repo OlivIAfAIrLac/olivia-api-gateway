@@ -151,7 +151,7 @@ export const tipo_de_droga = [
     'estimulantes_con_receta_medica',
     'esteroides_anabolicos',
     'cannabinoides_sinteticos_k_spice',
-    'catinonas_sinteticas_fentanilo',
+    'catinonas_sinteticas',
     'fentanilo',
 ];
 export const complexion = [
@@ -213,4 +213,14 @@ export const frecuencia_violencia = [
     'de_3_meses_a_6_meses',
     'de_6_meses_a_un_anio',
     'otra'
-]
+];
+export const genero = [
+    'cisgenero',
+    'transgenero',
+    'transexual',
+    'genero_fluido',
+    'agenero',
+    'persona_no_binaria',
+    'prefiero_no_decirlo',
+    'otro',
+];
