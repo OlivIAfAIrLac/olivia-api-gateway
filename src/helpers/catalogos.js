@@ -178,6 +178,7 @@ export const forma_cabello = [
     'rizado',
     'liso',
 ];
+
 export const nariz = [
     'recta',
     'aplanada',
