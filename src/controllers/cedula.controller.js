@@ -1,4 +1,5 @@
 import { Cedula } from '../models/Cedula';
+import { Expediente } from '../models/Expediente';
 
 
 export const getAllCedula = async (req, res, next) => {
@@ -6,7 +7,7 @@ export const getAllCedula = async (req, res, next) => {
         const { page } = req.query;
         const cedula = await Cedula.paginate({},
             {
-                limit: 9,
+                limit: 20,
                 page,
                 sort: { createdAt: 'desc' }
             }).then({})
@@ -21,8 +22,8 @@ export const getCedulaById = async (req, res, next) => {
     try {
         const { id } = req.params
 
-        const expediente = await Cedula.findOne({ _id: id })
-        const cedula = await Cedula.find().where("expediente").equals(expediente._id)
+        const expediente = await Expediente.findOne({ _id: id })
+        const cedula = await Cedula.findOne().where("expediente").equals(id)
 
         cedula
             ? res.send({

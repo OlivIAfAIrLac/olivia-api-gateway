@@ -1,17 +1,21 @@
 import { Router } from 'express';
-import { updateCedula } from '../controllers/cedula.controller';
+import {
+    getAllCedula,
+    getCedulaById,
+    updateCedula
+} from '../controllers/cedula.controller';
 
 /* INIT */
 const router = Router();
 
-// api/Documento
-// router.get('/', getAllDocumento);
-// router.get('/:id', getDocumentoById);
-// router.post('/', createDocumento);
+// api/
+// router.get('/', getAllCedula);
+router.get('/:id', getCedulaById);
+// router.post('/', create);
 
-// api/Documento/:id
+// api//:id
 router.patch('/:id', updateCedula);
-// router.delete('/:id', deleteDocumento);
+// router.delete('/:id', delete);
 
 
 

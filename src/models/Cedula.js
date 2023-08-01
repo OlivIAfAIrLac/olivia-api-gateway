@@ -1,4 +1,6 @@
 import { model, Schema } from 'mongoose';
+import mongoosePaginate from 'mongoose-paginate-v2'
+
 import {
     area_que_atiende,
     color_ojos,
@@ -759,6 +761,7 @@ const cedulaSchema = new Schema({
     },
 }, { timestamps: true });
 
+cedulaSchema.plugin(mongoosePaginate)
 
 
 

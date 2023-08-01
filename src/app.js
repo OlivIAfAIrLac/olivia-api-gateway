@@ -9,6 +9,7 @@ import usuarioRoutes from "./routes/usuarios.routes";
 import audioRoutes from "./routes/audio.routes";
 import { checkAuth } from './middleware/checkAuth';
 import { authUser } from './controllers/usuarios.controller';
+import { getAllCedula } from './controllers/cedula.controller';
 
 /* INIT */
 const app = express();
@@ -27,6 +28,7 @@ app.use('/api/login', authUser);
 app.use('/api/usuario', checkAuth, usuarioRoutes);
 app.use('/api/expediente', checkAuth, expedienteRoutes);
 app.use('/api/cedula', checkAuth, cedulaRoutes);
+app.use('/api/sabana', checkAuth, getAllCedula);
 app.use('/api/documento', checkAuth, documentoRoutes);
 app.use('/api/audio', checkAuth, audioRoutes);
 
