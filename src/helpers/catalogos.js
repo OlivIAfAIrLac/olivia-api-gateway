@@ -229,3 +229,11 @@ export const genero = [
     'prefiero_no_decirlo',
     'otro',
 ];
+export const discapacidad = [
+    'motora',
+    'auditiva',
+    'visual',
+    'intelectual',
+    'psicosocial',
+    'otra',
+]

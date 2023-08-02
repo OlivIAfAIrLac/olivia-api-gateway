@@ -1,11 +1,12 @@
 import { model, Schema } from 'mongoose';
-import mongoosePaginate from 'mongoose-paginate-v2'
+import mongoosePaginate from 'mongoose-paginate-v2';
 
 import {
     area_que_atiende,
     color_ojos,
     comparte_vivienda,
     complexion,
+    discapacidad,
     emergencia,
     escolaridad,
     estado_fisico,
@@ -393,6 +394,9 @@ const cedulaSchema = new Schema({
         type: String,
         enum: genero
     },
+    III_genero_habitante_especificar: {
+        type: String
+    },
     III_edad_habitante: {
         type: String
     },
@@ -418,9 +422,12 @@ const cedulaSchema = new Schema({
     III_nombre_completo_de_sus_hijes: {
         type: String
     },
-    III_especificar_sexo: {
+    III_sexo: {
         type: String,
         enum: sexo
+    },
+    III_especificar_sexo: {
+        type: String
     },
     III_edad_anios_cumplidos: {
         type: String
@@ -490,6 +497,9 @@ const cedulaSchema = new Schema({
     III_pertenece_a_un_grupo_originario_o_indigena: {
         type: Boolean
     },
+    III_pertenece_a_un_grupo_originario_o_indigena_especiificar: {
+        type: String
+    },
     III_es_una_persona_migrante_transmigrante: {
         type: Boolean
     },
@@ -499,11 +509,15 @@ const cedulaSchema = new Schema({
     III_pertenece_a_la_comunidad_lgbtttiq: {
         type: Boolean
     },
+    III_pertenece_a_la_comunidad_lgbtttiq_especificar: {
+        type: String
+    },
     III_tiene_alguna_discapacidad: {
         type: Boolean
     },
     III_especificar_discapacidad: {
-        type: String
+        type: String,
+        enum: discapacidad
     },
     III_vive_violencia_por_presentar_discapacidad: {
         type: Boolean
@@ -513,6 +527,9 @@ const cedulaSchema = new Schema({
     },
     III_presenta_alguna_discapacidad_a_consecuencia_de_la_violencia: {
         type: Boolean
+    },
+    III_presenta_alguna_discapacidad_a_consecuencia_de_la_violencia_especificar: {
+        type: String
     },
     III_tiene_alguna_enfermedad_cronica_degenerativa_que_limite_o_imposibilite_sus_actividades: {
         type: Boolean
