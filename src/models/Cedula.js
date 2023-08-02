@@ -564,6 +564,9 @@ const cedulaSchema = new Schema({
         type: String,
         enum: frecuencia_violencia
     },
+    IV_ultimo_episodio_de_violencia_especificar: {
+        type: String,
+    },
     IV_acciones_o_intentos_de_solucion_realizados: {
         type: String,
     },
