@@ -1,14 +1,18 @@
 export const area_que_atiende = [
-    'piscologia',
-    'juridico',
+    'psicologia',
+    'psicologia_nna',
+    'juridica',
     'trabajo_social',
     'ministerial',
     'pericial',
-    'conserjeria',
+    'medica',
+    'psiquiatrica',
+    'otra',
 ]
 export const modalidad_asesora = [
     'presencial',
     'telefonica',
+    'otra'
 ];
 export const escolaridad = [
     'kinder_o_preescolar',

@@ -28,8 +28,8 @@ export const authUser = async (req, res, next) => {
 
         /* check user pass */
     } catch (error) {
-        console.error(error);
-        res.status(500).send(error);
+        // console.error(error);
+        res.status(500)
     }
 }
 
@@ -68,7 +68,7 @@ export const createUsuario = async (req, res, next) => {
 
     } catch (error) {
         console.error(error);
-        res.status(500).send(error);
+        res.status(500)
     }
 }
 
@@ -82,7 +82,7 @@ export const getAllUsuarios = async (req, res, next) => {
             : res.send({ msg: "No se encontró ningún producto" });
     } catch (error) {
         console.error(error);
-        res.status(500).send(error.errors);
+        res.status(500)
     }
 }
 
@@ -95,7 +95,7 @@ export const getUsuarioById = async (req, res, next) => {
         usuario ? res.send(formatResponseUser(usuario)) : res.status(404).send({ msg: "No se encontró ningún usuario" });
     } catch (error) {
         console.error(error);
-        res.status(500).send(error.errors);
+        res.status(500)
     }
 }
 
@@ -113,7 +113,7 @@ export const deleteUsuario = async (req, res, next) => {
 
     } catch (error) {
         console.error(error);
-        res.status(500).send(error.errors)
+        res.status(500)
     }
 }
 
@@ -155,7 +155,7 @@ export const updateUsuario = async (req, res, next) => {
 
     } catch (error) {
         console.error(error);
-        res.status(500).send(error.errors);
+        res.status(500)
     }
 }
 

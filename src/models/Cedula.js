@@ -99,9 +99,15 @@ const cedulaSchema = new Schema({
             enum: area_que_atiende
         }
     ],
+    especificar: {
+        type: String
+    },
     modalidad_de_asesoria: {
         type: String,
         enum: modalidad_asesora
+    },
+    modalidad_especificar: {
+        type: String
     },
     institucion_que_atiende: {
         type: String,
