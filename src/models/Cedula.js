@@ -370,6 +370,7 @@ const cedulaSchema = new Schema({
     III_especificar_tipo_de_vivienda: {
         type: String
     },
+    /* MULTI */
     III_compartida_con_otras_personas: {
         type: String,
         enum: comparte_vivienda
@@ -377,14 +378,57 @@ const cedulaSchema = new Schema({
     III_cuantas_personas_habitan_en_su_vivienda: {
         type: String
     },
-    III_habitantes: [HabitantesSchema],
+    III_parentesco_habitante: {
+        type: String,
+        enum: parentesco
+    },
+    III_especificar_habitante: {
+        type: String
+    },
+    III_sexo_habitante: {
+        type: String,
+        enum: sexo
+    },
+    III_genero_habitante: {
+        type: String,
+        enum: genero
+    },
+    III_edad_habitante: {
+        type: String
+    },
+    III_tiene_alguna_discapacidad_habitante: {
+        type: Boolean
+    },
+    III_es_dependiente_economico_de_quien_solicita_la_atencion: {
+        type: Boolean
+    },
+    III_es_dependiente_de_cuidados_de_quien_solicita_la_atencion: {
+        type: Boolean
+    },
+    III_compartida_especificar: {
+        type: String
+    },
     III_tiene_hijas_hijos_o_hijes: {
         type: Boolean
     },
     III_cuantos_hijes_tiene: {
         type: String
     },
-    III_hijes: [HijesSchema],
+    /* MULTI HIJES */
+    III_nombre_completo_de_sus_hijes: {
+        type: String
+    },
+    III_especificar_sexo: {
+        type: String,
+        enum: sexo
+    },
+    III_edad_anios_cumplidos: {
+        type: String
+    },
+    III_escolaridad_hijes: {
+        type: String,
+        enum: escolaridad
+    },
     III_quien_aporta_el_mayor_ingreso_dentro_del_hogar: {
         type: String
     },
