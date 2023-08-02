@@ -515,9 +515,12 @@ const cedulaSchema = new Schema({
     III_tiene_alguna_discapacidad: {
         type: Boolean
     },
-    III_especificar_discapacidad: {
+    III_discapacidad: {
         type: String,
         enum: discapacidad
+    },
+    III_especificar_discapacidad: {
+        type: String,
     },
     III_vive_violencia_por_presentar_discapacidad: {
         type: Boolean
@@ -553,6 +556,9 @@ const cedulaSchema = new Schema({
     },
     IV_ultimo_episodio_de_violencia_reciente: {
         type: Boolean,
+    },
+    IV_ultimo_episodio_de_violencia_reciente_especificar: {
+        type: String,
     },
     IV_ultimo_episodio_de_violencia: {
         type: String,
