@@ -17,7 +17,6 @@ export const getAllCedula = async (req, res, next) => {
         res.status(500).send(error);
     }
 }
-
 export const getCedulaById = async (req, res, next) => {
     try {
         const { id } = req.params
@@ -36,7 +35,6 @@ export const getCedulaById = async (req, res, next) => {
         res.status(500).send(error.errors);
     }
 }
-
 export const updateCedula = async (req, res, next) => {
     try {
 
