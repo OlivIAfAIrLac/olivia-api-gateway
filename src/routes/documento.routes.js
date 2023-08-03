@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import {
-    createDocumento,
+    createDocumento, deleteDocumento,
     // deleteDocumento,
     // getAllDocumento,
     // getDocumentoById,
@@ -17,7 +17,7 @@ router.post('/', createDocumento);
 
 // api/Documento/:id
 // router.put('/:id', updateDocumento);
-// router.delete('/:id', deleteDocumento);
+router.delete('/:id', deleteDocumento);
 
 
 

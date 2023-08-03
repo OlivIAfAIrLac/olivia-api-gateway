@@ -1,6 +1,7 @@
 // import { Documento } from '../models/Documento';
 import { Expediente } from '../models/Expediente';
 import {
+    removeFile,
     uploadFile
 } from '../s3.js';
 
@@ -96,18 +97,16 @@ const createFile = async ({ file, prefix }) => await uploadFile({ file, prefix }
 export const deleteAudio = async (req, res, next) => {
     try {
         const { id } = req.params;
+        const { filename } = req.query;
+        const prefix = `${id}/audios`
 
+        await removeFile({ filename, prefix })
 
-        // const countDeleted = await Documento.deleteOne({ _id: id })
-
-        countDeleted.deletedCount === 1 ?
-            res.send({ msg: "audio eliminado", count: countDeleted })
-            :
-            res.send({ msg: "No se eliminó ningún audio" });
+        res.send({ msg: "audio eliminado correctamente" })
 
     } catch (error) {
         console.error(error);
-        res.status(500).send(error)
+        res.status(500).send({ msg: 'no se pudo eliminar el audio' })
     }
 }
 

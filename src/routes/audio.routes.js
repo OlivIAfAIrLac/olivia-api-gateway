@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import {
     createAudio,
+    deleteAudio,
 } from '../controllers/audio.controller';
 
 /* INIT */
@@ -13,7 +14,7 @@ router.post('/', createAudio);
 
 // api/Documento/:id
 // router.put('/:id', updateDocumento);
-// router.delete('/:id', deleteDocumento);
+router.delete('/:id', deleteAudio);
 
 
 

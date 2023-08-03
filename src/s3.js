@@ -1,4 +1,5 @@
 import {
+    DeleteObjectCommand,
     GetObjectCommand,
     ListObjectsCommand,
     PutObjectCommand,
@@ -66,4 +67,13 @@ export async function getFileURL(filename) {
         Key: filename
     })
     return await getSignedUrl(client, command, { expiresIn: 86_400 })
+}
+
+export async function removeFile({ filename, prefix }) {
+
+    const command = new DeleteObjectCommand({
+        Bucket: AWS_BUCKET_NAME, // required
+        Key: `${prefix}/${filename}`, // required
+    });
+    return await client.send(command);
 }
