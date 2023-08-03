@@ -1,9 +1,9 @@
 import { model, Schema } from 'mongoose';
-import mongoosePaginate from 'mongoose-paginate-v2'
+import mongoosePaginate from 'mongoose-paginate-v2';
 
 const expedienteSchema = new Schema({
     folio: {
-        type: String,
+        type: Number,
     },
     nombre: {
         type: String,

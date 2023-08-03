@@ -237,3 +237,8 @@ export const discapacidad = [
     'psicosocial',
     'otra',
 ]
+export const labios = [
+    'gruesos',
+    'regulares',
+    'delgados',
+]

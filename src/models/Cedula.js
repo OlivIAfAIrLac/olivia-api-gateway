@@ -15,6 +15,7 @@ import {
     forma_ojos,
     frecuencia_violencia,
     genero,
+    labios,
     modalidad_asesora,
     nariz,
     ocupacion,
@@ -767,6 +768,10 @@ const cedulaSchema = new Schema({
     VI_nariz: {
         type: String,
         enum: nariz
+    },
+    VI_labios: {
+        type: String,
+        enum: labios
     },
     VI_color_ojos: {
         type: String,
