@@ -1,15 +1,25 @@
+import endOfDayfrom from 'date-fns/endOfDay'
+import startOfDay from 'date-fns/startOfDay'
 import { Cedula } from '../models/Cedula';
 import { Expediente } from '../models/Expediente';
 
 
 export const getAllCedula = async (req, res, next) => {
     try {
-        const { page } = req.query;
-        const cedula = await Cedula.paginate({},
+        const { page, initDate, lastDate } = req.query;
+
+        const dateObjectInitDate = initDate ? new Date(initDate) : new Date()
+        const dateObjectLastDate = lastDate ? new Date(lastDate) : new Date()
+        const cedula = await Cedula.paginate({
+            createdAt: {
+                $gte: startOfDay(dateObjectInitDate),
+                $lte: endOfDayfrom(dateObjectLastDate)
+            }
+        },
             {
                 limit: 20,
                 page,
-                sort: { createdAt: 'desc' }
+                sort: { createdAt: 'asc' },
             }).then({})
         res.send(cedula);
     } catch (error) {
