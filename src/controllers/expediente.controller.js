@@ -107,13 +107,11 @@ export const createExpediente = async (req, res, next) => {
     try {
         const { body } = req;
         const {
-            folio,
             nombre,
             curp
         } = body;
 
         const expediente = new Expediente({
-            folio,
             nombre,
             curp
         })

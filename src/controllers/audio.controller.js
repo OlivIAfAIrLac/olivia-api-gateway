@@ -1,5 +1,4 @@
-import { mapDocumentos } from '../helpers/mapDocumentos';
-import { Documento } from '../models/Documento';
+// import { Documento } from '../models/Documento';
 import { Expediente } from '../models/Expediente';
 import {
     uploadFile
@@ -7,65 +6,64 @@ import {
 
 
 
-export const getAllAudios = async (req, res, next) => {
-    try {
-        const documento = await Documento.find()
-        if (documento.length > 0) res.send(documento);
-        else res.send([]);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send(error);
-    }
-}
+// export const getAllAudios = async (req, res, next) => {
+//     try {
+//         const documento = await Documento.find()
+//         if (documento.length > 0) res.send(documento);
+//         else res.send([]);
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).send(error);
+//     }
+// }
 
-export const getAudioById = async (req, res, next) => {
-    try {
-        const { id } = req.params
+// export const getAudioById = async (req, res, next) => {
+//     try {
+//         const { id } = req.params
 
-        const documento = await Documento.findOne({ _id: id })
+//         const documento = await Documento.findOne({ _id: id })
 
-        documento
-            ? res.send(documento)
-            : res.send([]);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send(error);
-    }
-}
+//         documento
+//             ? res.send(documento)
+//             : res.send([]);
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).send(error);
+//     }
+// }
 
-export const updateAudio = async (req, res, next) => {
-    try {
-        const { id } = req.params
+// export const updateAudio = async (req, res, next) => {
+//     try {
+//         const { id } = req.params
 
-        const {
-            descripcion,
-            url,
-            expediente,
-        } = req.body;
+//         const {
+//             descripcion,
+//             url,
+//             expediente,
+//         } = req.body;
 
-        const documento = await Documento.updateOne({ _id: id }, {
-            $set: {
-                descripcion,
-                url,
-                expediente,
-            }
-        });
+//         const documento = await Documento.updateOne({ _id: id }, {
+//             $set: {
+//                 descripcion,
+//                 url,
+//                 expediente,
+//             }
+//         });
 
-        documento.matchedCount === 1 ?
-            res.send({ msg: "Documento actualizado", documento }) :
-            res.status(304).send({ msg: "Documento no se pudo actualizar", documento })
+//         documento.matchedCount === 1 ?
+//             res.send({ msg: "Documento actualizado", documento }) :
+//             res.status(304).send({ msg: "Documento no se pudo actualizar", documento })
 
-    } catch (error) {
-        console.error(error);
-        res.status(500).send(error);
-    }
-}
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).send(error);
+//     }
+// }
 
 export const createAudio = async (req, res, next) => {
     try {
         const { body, files } = req;
         const { audios } = files;
-        console.log(audios);
         const {
             expediente
         } = body;
