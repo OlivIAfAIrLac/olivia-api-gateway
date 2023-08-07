@@ -74,8 +74,13 @@ export const createUsuario = async (req, res, next) => {
 
 export const getAllUsuarios = async (req, res, next) => {
     try {
-
-        const usuario = await Usuarios.find()
+        const { search } = req.query;
+        const query = {
+            nombre: {
+                $regex: new RegExp(search), $options: "i"
+            }
+        }
+        const usuario = await Usuarios.find(query)
 
         usuario ?
             res.send(usuario.map(item => formatResponseUser(item)))
