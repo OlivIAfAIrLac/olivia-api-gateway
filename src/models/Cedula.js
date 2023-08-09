@@ -3,6 +3,7 @@ import mongoosePaginate from 'mongoose-paginate-v2';
 
 import {
     area_que_atiende,
+    boolean,
     color_ojos,
     comparte_vivienda,
     complexion,
@@ -70,13 +71,16 @@ const HabitantesSchema = new Schema({
         type: String
     },
     III_tiene_alguna_discapacidad_habitante: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
     III_es_dependiente_economico_de_quien_solicita_la_atencion: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
     III_es_dependiente_de_cuidados_de_quien_solicita_la_atencion: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
 })
 
@@ -125,20 +129,23 @@ const cedulaSchema = new Schema({
     },
     /* I. Requerimientos específicos */
     I_la_persona_presenta_alguna_enfermedad_y_o_lesion_que_requiera_ser_atendida_con_inmediatez: {
-        type: Boolean,
+        type: String,
+        enum: boolean,
     },
     I_especificar_cual_en_caso_afirmativo: {
         type: String,
     },
     I_existe_algun_requerimiento_especifico: {
-        type: Boolean,
+        type: String,
+        enum: boolean,
     },
     I_requerimiento_cual: {
         type: String,
         enum: requerimiento_especifico
     },
     I_presenta_alguna_emergencia: {
-        type: Boolean,
+        type: String,
+        enum: boolean,
     },
     I_emergencia_cual: {
         type: String,
@@ -148,7 +155,8 @@ const cedulaSchema = new Schema({
         type: String,
     },
     I_esta_en_periodo_de_gestacion: {
-        type: Boolean,
+        type: String,
+        enum: boolean,
     },
     I_cuantos_meses: {
         type: Number,
@@ -217,14 +225,16 @@ const cedulaSchema = new Schema({
 
     },
     II_autoriza_dar_seguimiento_via_whatsapp: {
-        type: Boolean,
+        type: String,
+        enum: boolean,
 
     },
     II_motivo_whatsapp: {
         type: String,
     },
     II_autoriza_dar_seguimiento_via_telefonica: {
-        type: Boolean,
+        type: String,
+        enum: boolean,
 
     },
     II_motivo_telefonica: {
@@ -341,10 +351,12 @@ const cedulaSchema = new Schema({
         enum: estatus_escolaridad
     },
     III_sabe_leer_y_escribir: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
     III_tiene_seguridad_social: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
     III_cual_seguridad_social: {
         type: String,
@@ -402,19 +414,23 @@ const cedulaSchema = new Schema({
         type: String
     },
     III_tiene_alguna_discapacidad_habitante: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
     III_es_dependiente_economico_de_quien_solicita_la_atencion: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
     III_es_dependiente_de_cuidados_de_quien_solicita_la_atencion: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
     III_compartida_especificar: {
         type: String
     },
     III_tiene_hijas_hijos_o_hijes: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
     III_cuantos_hijes_tiene: {
         type: String
@@ -496,25 +512,30 @@ const cedulaSchema = new Schema({
         type: String
     },
     III_pertenece_a_un_grupo_originario_o_indigena: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
     III_pertenece_a_un_grupo_originario_o_indigena_especiificar: {
         type: String
     },
     III_es_una_persona_migrante_transmigrante: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
     III_es_una_persona_en_situacion_de_calle: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
     III_pertenece_a_la_comunidad_lgbtttiq: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
     III_pertenece_a_la_comunidad_lgbtttiq_especificar: {
         type: String
     },
     III_tiene_alguna_discapacidad: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
     III_discapacidad: {
         type: String,
@@ -524,25 +545,29 @@ const cedulaSchema = new Schema({
         type: String,
     },
     III_vive_violencia_por_presentar_discapacidad: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
     III_especificar_violencia: {
         type: String
     },
     III_presenta_alguna_discapacidad_a_consecuencia_de_la_violencia: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
     III_presenta_alguna_discapacidad_a_consecuencia_de_la_violencia_especificar: {
         type: String
     },
     III_tiene_alguna_enfermedad_cronica_degenerativa_que_limite_o_imposibilite_sus_actividades: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
     III_especificar_enfermedad_cronica: {
         type: String
     },
     III_consumo_de_drogas: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
     III_especificar_el_tipo_de_drogas_que_consume_la_prv: {
         type: String,
@@ -553,10 +578,12 @@ const cedulaSchema = new Schema({
         type: String,
     },
     IV_ha_tenido_que_ser_atendida_en_una_institucion_medica_o_por_personal_medico_como_consecuencia_de_un_evento_de_violencia_con_la_persona_agresora: {
-        type: Boolean,
+        type: String,
+        enum: boolean,
     },
     IV_ultimo_episodio_de_violencia_reciente: {
-        type: Boolean,
+        type: String,
+        enum: boolean,
     },
     IV_ultimo_episodio_de_violencia_reciente_especificar: {
         type: String,
@@ -588,20 +615,23 @@ const cedulaSchema = new Schema({
         type: String,
     },
     V_recurrio_a_alguna_institucion_para_pedir_apoyo: {
-        type: Boolean,
+        type: String,
+        enum: boolean,
     },
     V_recurrio_a_alguna_institucion_especificar: {
         type: String,
     },
     V_cuenta_con_expediente_de_atencion: {
-        type: Boolean,
+        type: String,
+        enum: boolean,
     },
     V_cuenta_con_expediente_de_atencion_especificar: {
         type: String
     },
     /* VI. INFORMACIÓN DE LA PERSONA AGRESORA */
     VI_persona_conocida_o_desconocida: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
     VI_pseudonimo: {
         type: String
@@ -701,7 +731,8 @@ const cedulaSchema = new Schema({
         type: String
     },
     VI_posesion_de_armas: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
     VI_especificar_arma: {
         type: String,
@@ -714,25 +745,30 @@ const cedulaSchema = new Schema({
         enum: tipo_de_droga
     },
     VI_enfermedad_mental: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
     VI_toma_algun_tratamiento_psiquiatrico: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
     VI_especificar_tratamiento: {
         type: String
     },
     VI_farmacodependencia: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
     VI_pertenece_a_la_policia_o_al_ejercito: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
     VI_especificar_plicia_ejercito: {
         type: String
     },
     VI_pertenece_o_tiene_enlace_con_el_crimen_organizado: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
     VI_especificar_crimen_organizado: {
         type: String
@@ -741,7 +777,8 @@ const cedulaSchema = new Schema({
         type: String
     },
     VI_infidelidad: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
     VI_estatura_aproximada: {
         type: String
@@ -799,43 +836,50 @@ const cedulaSchema = new Schema({
         type: String
     },
     VI_senias_particulares: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
     VI_especificar_senias: {
         type: String
     },
     VI_tatuajes: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
     VI_especifique_tatuajes: {
         type: String
     },
     VI_lunares: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
     VI_especifique_lunares: {
         type: String
     },
     VI_barba: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
     VI_especifique_barba: {
         type: String
     },
     VI_bigote: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
     VI_especifique_bigote: {
         type: String
     },
     VI_cicatrices: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
     VI_especifique_cicatrices: {
         type: String
     },
     VI_lesiones: {
-        type: Boolean
+        type: String,
+        enum: boolean
     },
     VI_especifique_lesiones: {
         type: String

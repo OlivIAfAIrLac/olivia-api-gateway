@@ -47,9 +47,6 @@ export const getCedulaById = async (req, res, next) => {
 }
 export const updateCedula = async (req, res, next) => {
     try {
-
-
-        /* TODO: Update where cedula has expediente id on params */
         const { body, params, query } = req
         const { id } = params
         const { expediente } = query

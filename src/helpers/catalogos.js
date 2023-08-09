@@ -242,3 +242,7 @@ export const labios = [
     'regulares',
     'delgados',
 ]
+export const boolean = [
+    'true',
+    'false'
+]
