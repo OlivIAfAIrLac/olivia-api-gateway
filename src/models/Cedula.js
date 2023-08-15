@@ -218,11 +218,9 @@ const cedulaSchema = new Schema({
     },
     II_otro: {
         type: String,
-
     },
     II_especificar: {
         type: String,
-
     },
     II_autoriza_dar_seguimiento_via_whatsapp: {
         type: String,

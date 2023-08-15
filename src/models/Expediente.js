@@ -18,6 +18,13 @@ const expedienteSchema = new Schema({
     curp: {
         type: String,
         required: true
+    },
+    audio_procesado: {
+        type: Boolean,
+        default: false
+    },
+    transcripcion: {
+        type: String,
     }
 }, {
     timestamps: true
