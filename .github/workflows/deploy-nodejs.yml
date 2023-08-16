@@ -29,9 +29,13 @@ jobs:
     - name: creating .env file
       run: |
           touch .env
-          echo API_ENDPOINT="lorem" >> .env
-          echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
-          cat .env
+          echo DB_URI=${{secrets.DB_URI}} >> .env
+          echo JWT_SECRET=${{secrets.JWT_SECRET}} >> .env
+          echo BUCKET_NAME=${{secrets.BUCKET_NAME}} >> .env
+          echo BUCKET_REGION=${{secrets.BUCKET_REGION}} >> .env
+          echo PUBLIC_KEY=${{secrets.PUBLIC_KEY}} >> .env
+          echo SECRET_KEY=${{secrets.SECRET_KEY}} >> .env
+          echo PORT=8080 >> .env
     - run: npm i
     - run: npm run build 
     - run: pm2 restart olivia-api
