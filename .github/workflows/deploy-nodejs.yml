@@ -23,11 +23,11 @@ jobs:
         envkey_SECRET_KEY: ${{ secrets.SECRET_KEY }}
         envkey_VARIABLE: ${{ vars.SOME_ACTION_VARIABLE }}
         some_other_variable: foobar
-        directory: olivia-api-gateway
+        directory: .
         file_name: .env
         fail_on_empty: false
         sort_keys: false
-        
+
   build:
     needs: create-envfile
     runs-on: self-hosted
