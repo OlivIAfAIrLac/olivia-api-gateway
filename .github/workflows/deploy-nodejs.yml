@@ -29,7 +29,7 @@ jobs:
     - name: creating .env file
       run: |
           touch .env
-          echo DB_URI=${{secrets.DB_URI}} >> .env
+          echo DB_URI=mongodb+srv://${{secrets.DB_USER}}:${{secrets.DB_PASS}}@oliviacluster.w2lhg7r.mongodb.net/?retryWrites=true&w=majority >> .env
           echo JWT_SECRET=${{secrets.JWT_SECRET}} >> .env
           echo BUCKET_NAME=${{secrets.BUCKET_NAME}} >> .env
           echo BUCKET_REGION=${{secrets.BUCKET_REGION}} >> .env
