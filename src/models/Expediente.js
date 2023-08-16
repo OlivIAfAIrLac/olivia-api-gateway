@@ -23,6 +23,9 @@ const expedienteSchema = new Schema({
         type: Boolean,
         default: false
     },
+    error_audio: {
+        type: String
+    },
     transcripcion: {
         type: String,
     }
