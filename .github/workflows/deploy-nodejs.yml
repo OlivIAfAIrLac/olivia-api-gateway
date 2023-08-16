@@ -28,7 +28,7 @@ jobs:
         fail_on_empty: false
         sort_keys: false
   build:
-
+    needs: create-envfile
     runs-on: self-hosted
 
     strategy:
