@@ -7,7 +7,7 @@ const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@oliviac
 export const db = async () => {
     try {
         await mongoose.connect(uri);
-        console.log(`Database connected`);
+        console.log("Database connected");
         console.log(uri);
     } catch (error) {
         console.log('====================================');
