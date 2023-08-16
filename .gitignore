@@ -109,7 +109,7 @@ thunder-tests/thunderCollection.db~
 thunder-tests/thunderEnvironment.db
 thunder-tests/thunderEnvironment.db~
 
-package-lock.json
+# package-lock.json
 .vscode/settings.json
 pnpm-lock.yaml
 uploads/
