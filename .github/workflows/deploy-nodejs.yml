@@ -36,6 +36,7 @@ jobs:
           echo PUBLIC_KEY=${{secrets.PUBLIC_KEY}} >> .env
           echo SECRET_KEY=${{secrets.SECRET_KEY}} >> .env
           echo PORT=8080 >> .env
+          cat .env
     - run: npm i
     - run: npm run build 
     - run: pm2 restart olivia-api
