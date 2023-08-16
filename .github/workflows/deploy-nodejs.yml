@@ -28,4 +28,4 @@ jobs:
         cache: 'npm'
     - run: npm i
     - run: npm run build 
-    - run: pm2 restart default
+    - run: pm2 restart olivia-api
